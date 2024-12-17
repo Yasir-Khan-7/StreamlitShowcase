@@ -174,7 +174,7 @@ def login_page():
             if st.button("Login"):
                 if username == "admin" and password == "password123":
                     st.session_state["authenticated"] = True
-                    st.experimental_rerun()
+                 
                 else:
                     st.error("Invalid username or password. Please try again.")
 
