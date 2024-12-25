@@ -1,4 +1,5 @@
 import streamlit as st
+from mysql_con import validate_user
 
 # Set page configuration
 st.set_page_config(page_title="Login Page", layout="wide")
@@ -124,6 +125,38 @@ st.markdown(
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
         width:500px;
     }
+   /* Styling for success and error messages */
+    .stAlert {
+        width: 80%;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* CSS for success and error messages */
+     .custom-success {
+        background-color: #0b8793;  /* Application primary greenish-blue */
+        color: #FFFFFF;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        width: 80%;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(11, 135, 147, 0.2); /* Subtle shadow */
+    }
+    /* Custom error message styling */
+    .custom-error {
+        background-color: #FF6B6B;  /* Soft red with some muted tone to match style */
+        color: #FFFFFF;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        width: 80%;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(255, 107, 107, 0.2); /* Soft shadow */
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -138,19 +171,40 @@ with col1:
     st.markdown("<h5>Log in to your account.</h5>", unsafe_allow_html=True)
     st.markdown("<div class='required-fields'>Enter your username and password to login</div>", unsafe_allow_html=True)
 
-    username = st.text_input("",placeholder="Username")
-    password = st.text_input("", type="password",placeholder="Password")
-     # Add forgot password link
-    st.markdown('<a class="forgot-password">Forgot Password?</a>', unsafe_allow_html=True)
+    username = st.text_input("", placeholder="Username")
+    password = st.text_input("", type="password", placeholder="Password")
+
     if st.button("Login"):
-        st.success("Login successful!")
-
-   
-
-# Right column: Register section
+       # Check if fields are empty
+        if not username and not password:
+            st.markdown(
+                "<div class='custom-error'>Please enter both username and password.</div>",
+                unsafe_allow_html=True,
+            )
+        elif not username:
+            st.markdown(
+                "<div class='custom-error'>Please enter your username.</div>",
+                unsafe_allow_html=True,
+            )
+        elif not password:
+            st.markdown(
+                "<div class='custom-error'>Please enter your password.</div>",
+                unsafe_allow_html=True,
+            )
+        else:
+            # Validate credentials
+            if validate_user(username, password):
+                st.markdown(
+                    "<div class='custom-success'>Login successful!</div>",
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    "<div class='custom-error'>Invalid username or password. Please try again.</div>",
+                    unsafe_allow_html=True,
+                )
+# Right column: Display image and text
 with col2:
-  
-    
     st.image("energy_centered_image.png")
     st.markdown(
         """
