@@ -233,7 +233,7 @@ col1, col2 = st.columns([0.7, 1])  # Adjust width ratio
 
 # Left column: Login form
 with col1:
-    st.image("iesa_green.svg", width=170)
+    st.image("images/iesa_green.svg", width=170)
     st.markdown("<h1>Welcome to IESA</h1>", unsafe_allow_html=True)
     st.markdown("<h5>Log in to your account.</h5>", unsafe_allow_html=True)
     st.markdown("<div class='required-fields'>Enter your username and password to login</div>", unsafe_allow_html=True)
