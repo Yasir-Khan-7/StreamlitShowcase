@@ -1,2 +1,5 @@
 streamlit
 mysql-connector-python
+streamlit-folium
+folium
+reportlab
